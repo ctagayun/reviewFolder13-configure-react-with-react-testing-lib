@@ -1,0 +1,96 @@
+
+How to Webpack 5 - Setup Tutorial - https://www.robinwieruch.de/webpack-setup-tutorial/
+
+1. We are using Webpack to generate one JavaScript bundle from 
+   all our source code in the src/ folder, which will be automatically put into 
+   your dist/ folder afterward. Then, it can be used in our entry point HTML file 
+   the following way:
+   
+      <script src="./bundle.js"></script>
+
+2.  Web Pack Setup
+       You will use Webpack to bundle your JavaScript source code, but also to 
+    add advanced features to build your project with further build steps later on. 
+    Moreover, you will use the Webpack Dev Server to serve your project in a local 
+    environment with a local web server for development purposes. Last but not least, 
+    you need the Webpack CLI as well. Let's install all three dependencies as libraries 
+    (node packages) by using npm for your project. From your project's root directory, type:
+     
+       npm install --save-dev webpack webpack-dev-server webpack-cli
+       
+    As a side effect, you should find a node_modules/ folder with all your third party 
+    dependencies.
+
+    Run your npm start script on the command line again, however, this time you have Webpack 
+    as local web server to serve your files in development mode
+
+
+3. How to Webpack 5 with Babel - Setup Tutorial - https://www.robinwieruch.de/webpack-babel-setup-tutorial/
+       By using Babel, the code which isn't supported yet, will get transpiled back to vanilla 
+     JAVASCRIPT so that every environment (e.g. browser) can interpret it. In order to get Babel 
+     running, you need to install two of its main dependencies on the command line:
+  
+           npm install --save-dev @babel/core @babel/preset-env
+
+     - Moreover, in case you have Webpack in place to bundle your JavaScript application, you will have to 
+       install a Webpack Loader for Babel:
+
+          npm install --save-dev babel-loader
+
+     - Now we need to modify PACKAGE.JSON 
+           "babel": {
+               "presets": [
+                  "@babel/preset-env"
+               ]
+            },
+     
+       and WEBPACK.CONFIG.JS - webpack.config.js file needs to include Babel in its build process as well. 
+        There, make use of the previously installed Loader for Babel. You need to tell Webpack on which files 
+       to use the loader (e.g. .js files) and optionally which folders to exclude from the 
+       process (e.g. node_modules):
+
+     - An optional step would be to extract your Babel configuration into a separate 
+       .babelrc configuration file. 
+       You can create this file in your project's root directory on the command line:
+
+           touch .babelrc
+         
+        Add configuration for bael. 
+           {
+            "presets": [
+               "@babel/preset-env"
+            ]
+            }
+
+      - Babel enables you to use future JavaScript features in your browser, because 
+        it TRANSPILES IT DOWN TO VANILLA JAVASCRIPT. Try it yourself by installing your 
+        first plugin. Make sure to see that the JavaScript feature doesn't work at first 
+        in your src/index.js file, but once you installed the plugin for the feature and 
+        integrated it in your .babelrc file, it should be possible to run the JavaScript 
+        source code.
+
+        Try out a Babel Plugin yourself
+        Install a Babel Plugin via npm to your project to support an upcoming 
+        JavaScript feature
+
+4. How to use ESLint in Webpack 5 - Setup Tutorial - https://www.robinwieruch.de/webpack-eslint/
+     npm install --save-dev eslint
+
+5. Scroll down to ESLint + Webpack + Babel - https://www.robinwieruch.de/webpack-eslint/
+     npm install --save-dev eslint-webpack-plugin
+
+     touch .eslintrc then add:
+        {
+         "rules":{}
+        }
+        
+   Next, you can use the new Webpack plugin for ESLint in your Webpack 
+   webpack.config.js file:
+
+   npm install --save-dev @babel/eslint-parser 
+   then in .eslintrc add:
+       touch .eslintrc then add:
+        {
+         "parser": "@babel/eslint-parser",
+         "rules":{}
+        }
