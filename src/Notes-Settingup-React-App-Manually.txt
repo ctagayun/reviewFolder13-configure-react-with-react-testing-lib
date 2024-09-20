@@ -94,3 +94,79 @@ How to Webpack 5 - Setup Tutorial - https://www.robinwieruch.de/webpack-setup-tu
          "parser": "@babel/eslint-parser",
          "rules":{}
         }
+
+  =======================================================
+   - go to https://www.robinwieruch.de/minimal-react-webpack-babel-setup/#react-with-babel
+
+   1.  npm install --save-dev @babel/preset-react 
+     modify .babelrc - insert "@babel/preset-react"
+
+   2. Next, let's inform Webpack in our webpack.config.js file about files with the
+     JSX extension to make sure that they run through the transpiling step as well:
+
+     Insert the following in webpack.config.js:
+        Rules Section: 
+          test: /\.(js|jsx)$/,
+        Resolve Section: 
+            extensions: ['*', '.js', '.jsx'],
+
+      That's it for enabling React in JavaScript by using Babel and Webpack. We are 
+      allowed to write React with JSX now.
+
+    3. In order to use React, you need two libraries (node packages): react and react-dom. 
+       Install them on the command line from your project's root folder:
+
+           npm install --save react react-dom
+
+    4. In your src/index.js, you can implement your entry point into the React world:
+            import React from 'react';
+            import ReactDOM from 'react-dom';
+
+            const title = 'React with Webpack and Babel';
+
+            ReactDOM.render(
+            <div>{title}</div>,
+            document.getElementById('app')
+            );
+
+    5. Add to dist/index.html file:
+         <div id="app"></div>
+
+       do npm start 
+       You should be able to see the output of your React implementation in your browser.
+
+    6. Scroll down to Hot Module Replacement in React
+
+        npm install --save-dev react-hot-loader
+
+        Second, add the configuration to your webpack.config.js file:
+           const webpack = require('webpack');
+           Plugin Section:
+               plugins: [new webpack.HotModuleReplacementPlugin()]
+           Dev Server Section:
+             hot: true
+        Third:
+            Additionally in the src/index.js file, you have to define
+          that hot reloading is available and should be used:   
+              module.hot.accept();
+
+          Start the app Once you change your title for the React component in the src/index.js file, 
+        you should see the updated output in the browser without any browser reloading. 
+       
+           Last but not least, create your first React component. In your src/index.js file, 
+        import a not yet defined App component
+
+        Next create App.js in ./src using touch App.js and then add the following:
+
+            import React from 'react';
+
+            const App = ({ title }) =>
+            <div>{title}</div>;
+
+            export default App;
+
+          Congratulations, you have created your first function component and passed props
+           (e.g ({title}))  to it. 
+
+        That's it for a minimal React setup with Babel and Webpack. Let me know your thoughts 
+        and whether there are things to improve the setup. You can find the repository on GitHub.
