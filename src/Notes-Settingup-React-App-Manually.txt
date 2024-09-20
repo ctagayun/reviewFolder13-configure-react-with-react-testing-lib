@@ -170,3 +170,38 @@ How to Webpack 5 - Setup Tutorial - https://www.robinwieruch.de/webpack-setup-tu
 
         That's it for a minimal React setup with Babel and Webpack. Let me know your thoughts 
         and whether there are things to improve the setup. You can find the repository on GitHub.
+
+
+   
+    7- React Testing with JEST + React Testing Library (RTL)
+
+       - Now let us proceed test a React App using JEST +RTL:
+           Go to https://www.robinwieruch.de/react-testing-library/ and scroll down to
+           "React Testing Library: Rendering a Component" 
+
+       -  We will use the following function component -https://www.robinwieruch.de/react-function-component/ (TODO - Very Good) called App component 
+          from a src/App.js file and test it in src/App.test.js
+      
+        - Defining a Test Suite   
+                describe('my function or component', () => {  <-- describe-block
+                    it('does the following', () => {           <-  it-block or test-case
+
+                    });
+                  });
+          
+        - RTL's render function takes any JSX as argument to render it as output. Afterward, 
+          you should have access to the React component in your test. To convince yourself 
+          that it's there, you can use RTL's debug function:
+              describe('App', () => {
+                it('renders App component', () => {
+                  render(<App />);
+
+                  screen.debug();
+                });
+              });
+
+      - npm run test -- --watch (to run testing)
+
+
+REVIEW FOLDER11 - React Function Components (TODO - Very good)
+   - https://www.robinwieruch.de/react-function-component/
