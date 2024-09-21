@@ -1,0 +1,779 @@
+REVIEW FOLDER 9 - React Testing 
+    Note: If you are a beginner and want to learn how to create a react app go to:
+            https://www.robinwieruch.de/the-road-to-learn-react/
+
+    1. Step1: go to  https://courses.robinwieruch.de/p/the-road-to-learn-react --> Course Modules
+          and select "Testing" menu item
+          --> React Router 
+          --> Tables in React
+          --> Testing 
+          ....
+     
+        - Demo is in c:\_AMyReactDev\reviewFolder9-testing-settingup-testing-using-Jest-and-React-Testing-Lib
+      
+        - Select Testing Menu Item:  
+            (1) then select  Testing in React Pane - https://www.robinwieruch.de/react-testing-tutorial/ 
+              
+                Read the whole page to get a good overview.  
+
+             (2) Create a project from scratch see demo:
+
+                 C:\_AMyReactDev\reviewFolder12-manually-create-react-and-configuring-Babel-Webpack-Eslint
+              
+             (3) Go to "How to React with Webpack 5 - Setup Tutorial" (https://www.robinwieruch.de/minimal-react-webpack-babel-setup/   )
+
+                While in  https://www.robinwieruch.de/minimal-react-webpack-babel-setup/ scroll down to 
+                the section labelled Table of Contents and go through the link of the following
+                tutorials: 
+                    
+                  A. React with Babel - https://www.robinwieruch.de/minimal-react-webpack-babel-setup/#react-with-babel
+                  B. React with Webpack - https://www.robinwieruch.de/minimal-react-webpack-babel-setup/#react-with-webpack
+                  C. Hot Module Replacement in React - https://www.robinwieruch.de/minimal-react-webpack-babel-setup/#hot-module-replacement-in-react
+
+                 (A). Details of React with Babel tutorial:
+                      npm install --save-dev @babel/preset-react
+
+                      In your .babelrc (or package.json) file -- depending on where you have your 
+                      Babel configuration for presets and plugins -- add the new preset. 
+                      In this tutorial, we will add it in our .babelrc file. 
+                      Add the "preset" code to .babelrc
+                          {
+                            "presets": [
+                              "@babel/preset-env",
+                              "@babel/preset-react"
+                            ]
+                          }
+
+                      Next let's inform Webpack in our webpack.config.js file about files 
+                      with the JSX extension to make sure that they run through the 
+                      transpiling step as well. see notes in webpack.config.js
+                          - insert in rules section:
+                               test: /\.(js|jsx)$/,
+                          - insert in resolve section:
+                               extensions: ['*', '.js', '.jsx'],
+
+
+                      That's it for enabling React in JavaScript by using Babel and Webpack. 
+                      We are allowed to write React with JSX now
+
+                  (B). Details of React with Webpack tutorial: 
+                      So far you should have the following folder structure:
+                            - node_modules/
+                            - dist/
+                              -- index.html
+                            - src/
+                              -- index.js
+                            - package.json
+                            - webpack.config.js   
+
+                      Next In order to use React, you need two libraries (node packages):
+                      react and react-dom. Install it from root folder 
+                      C:\_AMyReactDev\reviewFolder9-how-to-test-react-components:
+                
+                         npm install --save react react-dom
+
+                      Next go to src/index.js and implement your entry point which is  
+                      document.getElementById('app'):   
+
+                          ReactDOM.render(
+                            <div>{title}</div>,
+                            document.getElementById('app')
+                          );
+
+                      Next the React DOM API takes two arguments. The first argument is 
+                      the rendered JSX from React, the second argument is the HTML <div id="app">
+                      element where it should be integrated into the DOM. 
+                          Since it expects an HTML element 
+                      identified by an id attribute, we need to add this element in our 
+                      dist/index.html file:
+                          go dist/index.html and add <div id="app"></div>
+
+                      do Start your application with npm start to see the output.
+
+                  (C). Details of React with Hot Module Replacement tutorial: 
+                      A huge development boost will give you react-hot-loader (Hot Module Replacement). 
+                      It will shorten your feedback loop during development. Basically whenever you 
+                      change something in your source code, the change will apply in your app running 
+                      in the browser without reloading the entire page.
+                      
+                          First do: npm install --save-dev react-hot-loader 
+
+                          Install it from root folder C:\_AMyReactDev\reviewFolder9-how-to-test-react-components
+
+                      Second: Add the configuration to your webpack.config.js file:
+                            Insert in Plugins section:
+                               plugins: [new webpack.HotModuleReplacementPlugin()],
+                            Insert in devServer Section:
+                               hot:true
+
+                      Third: modify src/index.js. You have to define that hot reloading is available.
+                      Insert code:
+                          module.hot.accept();
+
+                      If you would remove the module.hot.accept(); line in index.js, the browser would 
+                      perform a reload if something has changed in the source code. 
+
+              (2) Last but not least, create your first component App.js. Then in your src/index.js 
+                  import app.js. To create App.js do:
+
+                      cd src/
+                      touch App.js   
+                      then bring up App.js in VS Code and add the following code: 
+
+                        import React from 'react';
+
+                          const App = ({ title }) =>
+                            <div>{title}</div>;
+
+                          export default App;
+
+
+              (3) Exercises (To Do)
+                  - go to Advance Webpack Setup 
+                        https://www.robinwieruch.de/webpack-advanced-setup-tutorial/
+
+                  - Put it into your minimal React with Webpack application
+
+                  - Confirm your final result with the official advanced React with Webpack setup
+                        https://github.com/rwieruch/advanced-react-webpack-babel-setup
+
+                    This tutorial is part 1 of 3 in the series.
+
+                    Part 2: How to use ESLint in Webpack - https://www.robinwieruch.de/webpack-eslint/
+                    Part 3: How to use ESLint in React - https://www.robinwieruch.de/react-eslint-webpack-babel/
+                    Continue Reading: How to use Prettier in VS Code -https://www.robinwieruch.de/how-to-use-prettier-vscode/
+                    Continue Reading: How to use CSS Modules in React - https://www.robinwieruch.de/react-css-modules/
+                    Continue Reading: How to use SVG Icons as React Components? - https://www.robinwieruch.de/react-svg-icon-components/
+                    Continue Reading: How to use Fonts in React - https://www.robinwieruch.de/webpack-font/
+                    Continue Reading: How to use Images in React - https://www.robinwieruch.de/webpack-images/
+
+    2. Step2: How to Test React with JEST (Configure your testing):
+
+          Demo: Folder9-testing-settingup-testing-using-Jest-and-React-Testing-Lib
+
+          Go to Course Module --> Testing --> Select JEST Pane - https://www.robinwieruch.de/react-testing-jest/
+
+          Scroll down to "Jest Testing in React Setup" 
+         
+          Notes:
+              JEST comes with its own test runner. All your tests are defined as:
+                  1. "Test Suites" (e.g. describe-block)
+                  2. "Test Cases" (e.g. it-block or test-block)
+              The Jest setup allows you to add optional configuration, to introduce a setup 
+              routine yourself, or to define custom npm scripts to run your Jest tests. 
+              In this tutorial, you will learn how to perform all of it.
+
+          Setting it Up: 
+              Bring up Folder9-testing-settingup-testing-using-Jest-and-React-Testing-Lib we created 
+
+              - copy and add the following code block to src/app.js (including import statements)
+                   "Export const dataReducer ..... to export default App
+
+              - the code block uses Axios to fetch data:
+                   npm install axios 
+                  
+              - in order to get our tests up and running, set up Jest by installing 
+                it on the command line as development dependencies:
+
+                            npm install --save-dev jest
+
+                    (A) modify package.json to create a new npm script which runs jest
+                        "scripts": {
+                          "start": "webpack serve --config ./webpack.config.js --mode development",
+                          "test": "jest --config ./jest.config.json"
+                        },
+                        next define this optional configuration for jest ./jest.config.json"
+
+                        in a configuration file. From command line/ROOT of the project do:
+
+                              touch jest.config.json
+
+                        this file will be created in the project root  (not in ./src)   
+
+
+                    (B) put the following test pattern in jest.config.json to run all test files
+                      which shall be executed by Jest
+                          {
+                            "testRegex": "((\\.|/*.)(spec))\\.js?$"
+                          }
+                        //The testRegex configuration is a regular expression that can be used to specify the 
+                        //naming of the files where your Jest tests will be located. In this case, the files will
+                        //have the name *spec.js. That's how you can separate them clearly from other files 
+                        //in your src/ folder.
+
+                    (C) Next, add a test file next to your App component's file in a new src/App.spec.js file.
+                          touch src/App.spec.js
+                          
+                    (D) And second, implement your first test case in a test suite in this new file:
+                            describe('My Test Suite', () => {
+                              it('My Test Case', () => {
+                                expect(true).toEqual(true);
+                              });
+                            });
+
+                      (E) And finally Now you should be able to run:
+
+                               npm run test:watch 
+
+                          to execute your test suites with your test cases. The test should 
+                          be green (valid, successful) for your previous test case, 
+                          but if you change the test to something else, 
+                          let's say expect(true).toEqual(false);, it should be red (invalid, failed). 
+                          Congratulations, you have run your first test with Jest!
+
+                          Add another script in package.json: "test:watch": "npm run test -- --watch"
+
+                          Doing this you can have two terminals: 
+                            1. terminal tab to start your React application with 
+                                npm start
+                            2. Terminal tab for your Jest tests in watch mode with 
+                                npm run test:watch 
+
+              -  Congratulations, you have run your first test with Jest!
+                
+
+          EXERCISES: 
+              Read more about getting started with Jest - https://jestjs.io/docs/getting-started
+              Read more about Jest's Globals - https://jestjs.io/docs/api
+              Read more about Jest's Assertions https://jestjs.io/docs/expect
+          
+    
+    3. Scroll down to "Jest Snapshot Testing in React"  (Not working) 
+        - Jest introduced the so-called Snapshot Test. Basically a Snapshot Test creates 
+          a snapshot -- which is stored in a separate file -- of your rendered component's 
+          output when you run your test.
+
+        - By using Jest for Snapshot Tests, you can keep your tests lightweight, without worrying 
+          too much about implementation details of the component. Let's see how these work in React. 
+
+          install the react-test-renderer utility library:
+              npm install --save-dev react-test-renderer
+
+        -  add a test file next to your App component's file in a new src/App.spec.js file.
+
+              First, create the test file on the command line:
+                touch src/App.spec.js
+              Second, Add another npm script in package.json for watching your Jest tests
+                "test:watch": "npm run test -- --watch"
+    
+              Now run the test:
+                npm run test:watch
+
+    4. Scroll down to "Jest Unit/Integration Testing in React" (TODO)
+
+
+    5. Go to "Testing using Jest + React Testing Library"
+        - Demo: c:\_AMyReactDev\reviewFolder9-testing-settingup-testing-using-Jest-and-React-Testing-Lib
+
+        - https://www.robinwieruch.de/react-testing-library/
+        
+        - see C:\_AMyReactDev\reviewFolder9-how-to-test-react-components
+
+        - Defining a Test Suite   
+            describe('my function or component', () => {  <-- describe-block
+                it('does the following', () => {           <-  it-block or test-case
+
+                });
+              });
+
+        - Defining an "It-Block" (which can be named "test instead of it")
+
+    6. Testing using Vitest React Testing Library (TODO)
+          - https://www.robinwieruch.de/vitest-react-testing-library/
+
+    7. React Testing Library: Rendering a Component
+        - Demo: c:\_AMyReactDev\reviewFolder9-testing-settingup-testing-using-Jest-and-React-Testing-Lib
+
+        - https://www.robinwieruch.de/react-testing-library/
+
+        - After the setup in Jest or Vitest, you will learn how to render a 
+          React component in a test with React Testing Library. We will use the 
+          following function component called App component from a src/App.js file:
+              
+
+
+    //============================================  
+    //*    Notes: React Testing Overview
+    //============================================          
+    - Type of Tests:
+          - unit tests, integration tests, snapshot tests, 
+            end-to-end tests (also called E2E tests) 
+
+    - If you created the project using "CREATE-REACT-APP' ignore most of the setup sections
+      because it it comes with Jest as test runner and assertion library. You could add various 
+      other testing libraries such as Enzyme and React Testing Library to it.
+
+      Otherwise use https://www.robinwieruch.de/minimal-react-webpack-babel-setup/
+      (How to React with Webpack 5 - Setup Tutorial) if you are not using create-react-app
+
+    - Testing pyramid -> unit testing --> integration testing --> E-2-E testing
+
+    - Most of your tests should follow a test pattern especially if you are using TDD
+      (Test-Driven Development ) -https://en.wikipedia.org/wiki/Test-driven_development
+      Test-driven development (TDD) is a way of writing code that involves writing an 
+      automated unit-level test case that fails, then writing just enough code to make 
+      the test pass, then refactoring both the test code and the production code, then 
+      repeating with another new test case.
+
+    - Ways to test React Components
+        1. Jest + React Testing Library (https://www.robinwieruch.de/react-testing-library/)
+        2. Jest + Enzyme
+            As you can see, there are various ways to test React components:
+            Mocha, Chai, Sinon + Enzyme: If you are coming from a Node.js environment.
+            Jest + Enzyme/React Testing Library: If you want to test the more idiomatic way.
+
+    - My preferred way:  Jest + React Testing Library
+
+      In addition, you may want to end-to-end test your React applications as well. I have 
+      found Cypress the best option to conduct these kinds of tests: How to test React 
+      components E2E with Cypress https://www.robinwieruch.de/react-testing-cypress/. 
+      If you want to dive into visual regression testing, you can use React Storybook: 
+      Visual Regression Tests and React Storybook 
+      https://www.robinwieruch.de/visual-regression-testing-react-storybook/.
+
+    - Last but not least, to get the most out of your tests in an automated environment, 
+      you may want to use continuous integration (CI) to run your tests before deploying 
+      your JavaScript application:
+        1. How to set up Continuous Integration for JavaScript
+              https://www.robinwieruch.de/javascript-continuous-integration/
+
+        2. How to set up JavaScript Test Coverage
+              https://www.robinwieruch.de/javascript-test-coverage/
+            
+    - Conclusion:
+        I would say that testing React components with Mocha/Chai is rather optional, 
+        because JEST is the better alternative for it. Also visual regression testing may not 
+        be relevant for everyone. My recommended test stack would be 
+
+            Jest + Enzyme/React Testing Library for unit/integration tests and 
+            Cypress for end-to-end tests. 
+
+        Then add testing coverage to the mix and connect your application to your 
+        favorite CI to run your tests in the cloud as well.
+
+    - How to test React components with Jest +  React Testing Library Tutorial
+          (https://www.robinwieruch.de/react-testing-library/)        
+          Jest and React Testing Library need each other
+    - Examples:
+          describe('my function or component', () => { //decribe-block is the test suite
+          it('does the following', () => {             //it-block is the test case
+
+          });  });
+      
+    - Now go to Jest with React Testing Library https://www.robinwieruch.de/react-testing-jest/
+      and do the following as described in the tutorial in the above link:
+        (1) create the app as descibed in the link
+        (2) install Jest: npm install --save-dev jest
+            
+    - Now run your test via Jest's  test runner: npm run test, you will see
+      the following output: 
+        PASS  src/App.test.js
+            true is truthy and false is falsy
+              ✓ true is truthy (3ms)
+              ✓ false is falsy
+
+          Test Suites: 1 passed, 1 total
+          Tests:       2 passed, 2 total
+          Snapshots:   0 total
+          Time:        2.999s
+          Ran all test suites related to changed files.
+
+          Watch Usage
+          › Press a to run all tests.
+          › Press f to run only failed tests.
+          › Press q to quit watch mode.
+          › Press p to filter by a filename regex pattern.
+          › Press t to filter by a test name regex pattern.
+          › Press Enter to trigger a test run.
+                Read the whole page to get a good overview.  
+
+                See Notes: React Testing Overview below
+
+                After going through this overview page create a React project by clicking 
+                the link: 
+
+                    How to Setup React with Webpack 5 and Babel
+                      https://www.robinwieruch.de/minimal-react-webpack-babel-setup/   
+              
+                This link has four tutorials. Study Part 1-3 later:
+                    Part 1: How to set up a modern JavaScript project - https://www.robinwieruch.de/javascript-project-setup-tutorial/
+                    Part 2: How to set up Webpack 5 - https://www.robinwieruch.de/webpack-setup-tutorial/
+                    Part 3: How to set up Webpack 5 with Babel - https://www.robinwieruch.de/webpack-babel-setup-tutorial/
+                    Part 4: 
+
+                How to React with Webpack 5 - Setup Tutorial is Part4 (https://www.robinwieruch.de/minimal-react-webpack-babel-setup/   )
+
+                Within this link click "boilerplate project on github" link and download the 
+                boiler project created by Robin in https://www.robinwieruch.de/minimal-react-webpack-babel-setup/
+                The project enables you to write JavaScript applications with Webpack and Babel.
+              
+                Extract the project to: C:\_AMyReactDev\reviewFolder9-how-to-test-react-components
+                and do the following:
+
+                        - npm install 
+                        - npm start 
+                        - visit http://localhost:8000/
+
+                While in  https://www.robinwieruch.de/minimal-react-webpack-babel-setup/ go to 
+                the section labelled Table of Contents and go through the link of the following
+                tutorials: 
+                    
+                  A. React with Babel - https://www.robinwieruch.de/minimal-react-webpack-babel-setup/#react-with-babel
+                  B. React with Webpack - https://www.robinwieruch.de/minimal-react-webpack-babel-setup/#react-with-webpack
+                  C. Hot Module Replacement in React - https://www.robinwieruch.de/minimal-react-webpack-babel-setup/#hot-module-replacement-in-react
+
+                (A). Details of React with Babel tutorial:
+                      npm install --save-dev @babel/preset-react
+
+                      In your .babelrc (or package.json) file -- depending on where you have your 
+                      Babel configuration for presets and plugins -- add the new preset. 
+                      In this tutorial, we will add it in our .babelrc file. 
+                      Add the "preset" code to .babelrc
+                          {
+                            "presets": [
+                              "@babel/preset-env",
+                              "@babel/preset-react"
+                            ]
+                          }
+
+                      Next let's inform Webpack in our webpack.config.js file about files 
+                      with the JSX extension to make sure that they run through the 
+                      transpiling step as well. see notes in webpack.config.js
+                          - insert in rules section:
+                               test: /\.(js|jsx)$/,
+                          - insert in resolve section:
+                               extensions: ['*', '.js', '.jsx'],
+
+
+                      That's it for enabling React in JavaScript by using Babel and Webpack. 
+                      We are allowed to write React with JSX now
+
+                  (B). Details of React with Webpack tutorial: 
+                      So far you should have the following folder structure:
+                            - node_modules/
+                            - dist/
+                              -- index.html
+                            - src/
+                              -- index.js
+                            - package.json
+                            - webpack.config.js   
+
+                      Next In order to use React, you need two libraries (node packages):
+                      react and react-dom. Install it from root folder 
+                      C:\_AMyReactDev\reviewFolder9-how-to-test-react-components:
+                
+                         npm install --save react react-dom
+
+                      Next go to src/index.js and implement your entry point which is  
+                      document.getElementById('app'):   
+
+                          ReactDOM.render(
+                            <div>{title}</div>,
+                            document.getElementById('app')
+                          );
+
+                      Next the React DOM API takes two arguments. The first argument is 
+                      the rendered JSX from React, the second argument is the HTML <div id="app">
+                      element where it should be integrated into the DOM. 
+                          Since it expects an HTML element 
+                      identified by an id attribute, we need to add this element in our 
+                      dist/index.html file:
+                          go dist/index.html and add <div id="app"></div>
+
+                      do Start your application with npm start to see the output.
+
+                  (C). Details of React with Hot Module Replacement tutorial: 
+                      A huge development boost will give you react-hot-loader (Hot Module Replacement). 
+                      It will shorten your feedback loop during development. Basically whenever you 
+                      change something in your source code, the change will apply in your app running 
+                      in the browser without reloading the entire page.
+                      
+                          First do: npm install --save-dev react-hot-loader 
+
+                          Install it from root folder C:\_AMyReactDev\reviewFolder9-how-to-test-react-components
+
+                      Second: Add the configuration to your webpack.config.js file:
+                            Insert in Plugins section:
+                               plugins: [new webpack.HotModuleReplacementPlugin()],
+                            Insert in devServer Section:
+                               hot:true
+
+                      Third: modify src/index.js. You have to define that hot reloading is available.
+                      Insert code:
+                          module.hot.accept();
+
+                      If you would remove the module.hot.accept(); line in index.js, the browser would 
+                      perform a reload if something has changed in the source code. 
+
+              (2) Last but not least, create your first component App.js. Then in your src/index.js 
+                  import app.js. To create App.js do:
+
+                      cd src/
+                      touch App.js   
+                      then bring up App.js in VS Code and add the following code: 
+
+                        import React from 'react';
+
+                          const App = ({ title }) =>
+                            <div>{title}</div>;
+
+                          export default App;
+
+
+              (3) Exercises (To Do)
+                  - go to Advance Webpack Setup 
+                        https://www.robinwieruch.de/webpack-advanced-setup-tutorial/
+
+                  - Put it into your minimal React with Webpack application
+
+                  - Confirm your final result with the official advanced React with Webpack setup
+                        https://github.com/rwieruch/advanced-react-webpack-babel-setup
+
+                    This tutorial is part 1 of 3 in the series.
+
+                    Part 2: How to use ESLint in Webpack - https://www.robinwieruch.de/webpack-eslint/
+                    Part 3: How to use ESLint in React - https://www.robinwieruch.de/react-eslint-webpack-babel/
+                    Continue Reading: How to use Prettier in VS Code -https://www.robinwieruch.de/how-to-use-prettier-vscode/
+                    Continue Reading: How to use CSS Modules in React - https://www.robinwieruch.de/react-css-modules/
+                    Continue Reading: How to use SVG Icons as React Components? - https://www.robinwieruch.de/react-svg-icon-components/
+                    Continue Reading: How to use Fonts in React - https://www.robinwieruch.de/webpack-font/
+                    Continue Reading: How to use Images in React - https://www.robinwieruch.de/webpack-images/
+
+    2. Step2: How to Test React with JEST (Configure your testing):
+
+          Demo: Folder9-testing-settingup-testing-using-Jest-and-React-Testing-Lib
+
+          Go to Course Module --> Testing --> Select JEST Pane - https://www.robinwieruch.de/react-testing-jest/
+
+          Scroll down to "Jest Testing in React Setup" 
+         
+          Notes:
+              JEST comes with its own test runner. All your tests are defined as:
+                  1. "Test Suites" (e.g. describe-block)
+                  2. "Test Cases" (e.g. it-block or test-block)
+              The Jest setup allows you to add optional configuration, to introduce a setup 
+              routine yourself, or to define custom npm scripts to run your Jest tests. 
+              In this tutorial, you will learn how to perform all of it.
+
+          Setting it Up: 
+              Bring up Folder9-testing-settingup-testing-using-Jest-and-React-Testing-Lib we created 
+
+              - copy and add the following code block to src/app.js (including import statements)
+                   "Export const dataReducer ..... to export default App
+
+              - the code block uses Axios to fetch data:
+                   npm install axios 
+                  
+              - in order to get our tests up and running, set up Jest by installing 
+                it on the command line as development dependencies:
+
+                            npm install --save-dev jest
+
+                    (A) modify package.json to create a new npm script which runs jest
+                        "scripts": {
+                          "start": "webpack serve --config ./webpack.config.js --mode development",
+                          "test": "jest --config ./jest.config.json"
+                        },
+                        next define this optional configuration for jest ./jest.config.json"
+
+                        in a configuration file. From command line/ROOT of the project do:
+
+                              touch jest.config.json
+
+                        this file will be created in the project root  (not in ./src)   
+
+
+                    (B) put the following test pattern in jest.config.json to run all test files
+                      which shall be executed by Jest
+                          {
+                            "testRegex": "((\\.|/*.)(spec))\\.js?$"
+                          }
+                        //The testRegex configuration is a regular expression that can be used to specify the 
+                        //naming of the files where your Jest tests will be located. In this case, the files will
+                        //have the name *spec.js. That's how you can separate them clearly from other files 
+                        //in your src/ folder.
+
+                    (C) Next, add a test file next to your App component's file in a new src/App.spec.js file.
+                          touch src/App.spec.js
+                          
+                    (D) And second, implement your first test case in a test suite in this new file:
+                            describe('My Test Suite', () => {
+                              it('My Test Case', () => {
+                                expect(true).toEqual(true);
+                              });
+                            });
+
+                      (E) And finally Now you should be able to run:
+
+                               npm run test:watch 
+
+                          to execute your test suites with your test cases. The test should 
+                          be green (valid, successful) for your previous test case, 
+                          but if you change the test to something else, 
+                          let's say expect(true).toEqual(false);, it should be red (invalid, failed). 
+                          Congratulations, you have run your first test with Jest!
+
+                          Add another script in package.json: "test:watch": "npm run test -- --watch"
+
+                          Doing this you can have two terminals: 
+                            1. terminal tab to start your React application with 
+                                npm start
+                            2. Terminal tab for your Jest tests in watch mode with 
+                                npm run test:watch 
+
+              -  Congratulations, you have run your first test with Jest!
+                
+
+          EXERCISES: 
+              Read more about getting started with Jest - https://jestjs.io/docs/getting-started
+              Read more about Jest's Globals - https://jestjs.io/docs/api
+              Read more about Jest's Assertions https://jestjs.io/docs/expect
+          
+    
+    3. Scroll down to "Jest Snapshot Testing in React"  (Not working) 
+        - Jest introduced the so-called Snapshot Test. Basically a Snapshot Test creates 
+          a snapshot -- which is stored in a separate file -- of your rendered component's 
+          output when you run your test.
+
+        - By using Jest for Snapshot Tests, you can keep your tests lightweight, without worrying 
+          too much about implementation details of the component. Let's see how these work in React. 
+
+          install the react-test-renderer utility library:
+              npm install --save-dev react-test-renderer
+
+        -  add a test file next to your App component's file in a new src/App.spec.js file.
+
+              First, create the test file on the command line:
+                touch src/App.spec.js
+              Second, Add another npm script in package.json for watching your Jest tests
+                "test:watch": "npm run test -- --watch"
+    
+              Now run the test:
+                npm run test:watch
+
+    4. Scroll down to "Jest Unit/Integration Testing in React" (TODO)
+
+
+    5. Go to "Testing using Jest + React Testing Library"
+        - Demo: c:\_AMyReactDev\reviewFolder9-testing-settingup-testing-using-Jest-and-React-Testing-Lib
+
+        - https://www.robinwieruch.de/react-testing-library/
+        
+        - see C:\_AMyReactDev\reviewFolder9-how-to-test-react-components
+
+        - Defining a Test Suite   
+            describe('my function or component', () => {  <-- describe-block
+                it('does the following', () => {           <-  it-block or test-case
+
+                });
+              });
+
+        - Defining an "It-Block" (which can be named "test instead of it")
+
+    6. Testing using Vitest React Testing Library (TODO)
+          - https://www.robinwieruch.de/vitest-react-testing-library/
+
+    7. React Testing Library: Rendering a Component
+        - Demo: c:\_AMyReactDev\reviewFolder9-testing-settingup-testing-using-Jest-and-React-Testing-Lib
+
+        - https://www.robinwieruch.de/react-testing-library/
+
+        - After the setup in Jest or Vitest, you will learn how to render a 
+          React component in a test with React Testing Library. We will use the 
+          following function component called App component from a src/App.js file:
+              
+
+
+    //============================================  
+    //*    Notes: React Testing Overview
+    //============================================          
+    - Type of Tests:
+          - unit tests, integration tests, snapshot tests, 
+            end-to-end tests (also called E2E tests) 
+
+    - If you created the project using "CREATE-REACT-APP' ignore most of the setup sections
+      because it it comes with Jest as test runner and assertion library. You could add various 
+      other testing libraries such as Enzyme and React Testing Library to it.
+
+      Otherwise use https://www.robinwieruch.de/minimal-react-webpack-babel-setup/
+      (How to React with Webpack 5 - Setup Tutorial) if you are not using create-react-app
+
+    - Testing pyramid -> unit testing --> integration testing --> E-2-E testing
+
+    - Most of your tests should follow a test pattern especially if you are using TDD
+      (Test-Driven Development ) -https://en.wikipedia.org/wiki/Test-driven_development
+      Test-driven development (TDD) is a way of writing code that involves writing an 
+      automated unit-level test case that fails, then writing just enough code to make 
+      the test pass, then refactoring both the test code and the production code, then 
+      repeating with another new test case.
+
+    - Ways to test React Components
+        1. Jest + React Testing Library (https://www.robinwieruch.de/react-testing-library/)
+        2. Jest + Enzyme
+            As you can see, there are various ways to test React components:
+            Mocha, Chai, Sinon + Enzyme: If you are coming from a Node.js environment.
+            Jest + Enzyme/React Testing Library: If you want to test the more idiomatic way.
+
+    - My preferred way:  Jest + React Testing Library
+
+      In addition, you may want to end-to-end test your React applications as well. I have 
+      found Cypress the best option to conduct these kinds of tests: How to test React 
+      components E2E with Cypress https://www.robinwieruch.de/react-testing-cypress/. 
+      If you want to dive into visual regression testing, you can use React Storybook: 
+      Visual Regression Tests and React Storybook 
+      https://www.robinwieruch.de/visual-regression-testing-react-storybook/.
+
+    - Last but not least, to get the most out of your tests in an automated environment, 
+      you may want to use continuous integration (CI) to run your tests before deploying 
+      your JavaScript application:
+        1. How to set up Continuous Integration for JavaScript
+              https://www.robinwieruch.de/javascript-continuous-integration/
+
+        2. How to set up JavaScript Test Coverage
+              https://www.robinwieruch.de/javascript-test-coverage/
+            
+    - Conclusion:
+        I would say that testing React components with Mocha/Chai is rather optional, 
+        because JEST is the better alternative for it. Also visual regression testing may not 
+        be relevant for everyone. My recommended test stack would be 
+
+            Jest + Enzyme/React Testing Library for unit/integration tests and 
+            Cypress for end-to-end tests. 
+
+        Then add testing coverage to the mix and connect your application to your 
+        favorite CI to run your tests in the cloud as well.
+
+    - How to test React components with Jest +  React Testing Library Tutorial
+          (https://www.robinwieruch.de/react-testing-library/)        
+          Jest and React Testing Library need each other
+    - Examples:
+          describe('my function or component', () => { //decribe-block is the test suite
+          it('does the following', () => {             //it-block is the test case
+
+          });  });
+      
+    - Now go to Jest with React Testing Library https://www.robinwieruch.de/react-testing-jest/
+      and do the following as described in the tutorial in the above link:
+        (1) create the app as descibed in the link
+        (2) install Jest: npm install --save-dev jest
+            
+    - Now run your test via Jest's  test runner: npm run test, you will see
+      the following output: 
+        PASS  src/App.test.js
+            true is truthy and false is falsy
+              ✓ true is truthy (3ms)
+              ✓ false is falsy
+
+          Test Suites: 1 passed, 1 total
+          Tests:       2 passed, 2 total
+          Snapshots:   0 total
+          Time:        2.999s
+          Ran all test suites related to changed files.
+
+          Watch Usage
+          › Press a to run all tests.
+          › Press f to run only failed tests.
+          › Press q to quit watch mode.
+          › Press p to filter by a filename regex pattern.
+          › Press t to filter by a test name regex pattern.
+          › Press Enter to trigger a test run.
