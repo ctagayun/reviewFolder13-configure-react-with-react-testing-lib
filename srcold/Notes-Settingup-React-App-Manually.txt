@@ -1,0 +1,239 @@
+Important Notes:
+   Link to React Docs: https://react.dev/blog/2023/03/16/introducing-react-dev
+   React 19 Upgrade Guide: https://react.dev/blog/2024/04/25/react-19-upgrade-guide#deprecated-react-test-renderer
+   Check version of React: 
+        npm view react version
+   React Testing Lib Link: https://www.npmjs.com/package/@testing-library/react
+   Install RTL: npm install --save-dev @testing-library/react @testing-library/dom
+
+How to Webpack 5 - Setup Tutorial - https://www.robinwieruch.de/webpack-setup-tutorial/
+   npm view react version command to find out version of react you are using
+
+1. We are using Webpack to generate one JavaScript bundle from 
+   all our source code in the src/ folder, which will
+   your dist/ folder afterward. Then, it can be used in our entry point HTML file 
+   the following way:
+   
+      <script src="./bundle.js"></script>
+
+2.  Web Pack Setup
+       You will use Webpack to bundle your JavaScript source code, but also to 
+    add advanced features to build your project with further build steps later on. 
+    Moreover, you will use the Webpack Dev Server to serve your project in a local 
+    environment with a local web server for development purposes. Last but not least, 
+    you need the Webpack CLI as well. Let's install all three dependencies as libraries 
+    (node packages) by using npm for your project. From your project's root directory, type:
+     
+       npm install --save-dev webpack webpack-dev-server webpack-cli
+       
+    As a side effect, you should find a node_modules/ folder with all your third party 
+    dependencies.
+
+    Run your npm start script on the command line again, however, this time you have Webpack 
+    as local web server to serve your files in development mode
+
+
+3. How to Webpack 5 with Babel - Setup Tutorial - https://www.robinwieruch.de/webpack-babel-setup-tutorial/
+       By using Babel, the code which isn't supported yet, will get transpiled back to vanilla 
+     JAVASCRIPT so that every environment (e.g. browser) can interpret it. In order to get Babel 
+     running, you need to install two of its main dependencies on the command line:
+  
+           npm install --save-dev @babel/core @babel/preset-env
+
+     - Moreover, in case you have Webpack in place to bundle your JavaScript application, you will have to 
+       install a Webpack Loader for Babel:
+
+          npm install --save-dev babel-loader
+
+     - Now we need to modify PACKAGE.JSON 
+           "babel": {
+               "presets": [
+                  "@babel/preset-env"
+               ]
+            },
+     
+       and WEBPACK.CONFIG.JS - webpack.config.js file needs to include Babel in its build process as well. 
+        There, make use of the previously installed Loader for Babel. You need to tell Webpack on which files 
+       to use the loader (e.g. .js files) and optionally which folders to exclude from the 
+       process (e.g. node_modules):
+
+     - An optional step would be to extract your Babel configuration into a separate 
+       .babelrc configuration file. 
+       You can create this file in your project's root directory on the command line:
+
+           touch .babelrc
+         
+        Add configuration for bael. 
+           {
+            "presets": [
+               "@babel/preset-env"
+            ]
+            }
+
+      - Babel enables you to use future JavaScript features in your browser, because 
+        it TRANSPILES IT DOWN TO VANILLA JAVASCRIPT. Try it yourself by installing your 
+        first plugin. Make sure to see that the JavaScript feature doesn't work at first 
+        in your src/index.js file, but once you installed the plugin for the feature and 
+        integrated it in your .babelrc file, it should be possible to run the JavaScript 
+        source code.
+
+        Try out a Babel Plugin yourself
+        Install a Babel Plugin via npm to your project to support an upcoming 
+        JavaScript feature
+
+4. How to use ESLint in Webpack 5 - Setup Tutorial - https://www.robinwieruch.de/webpack-eslint/
+     npm install --save-dev eslint
+
+5. Scroll down to ESLint + Webpack + Babel - https://www.robinwieruch.de/webpack-eslint/
+     npm install --save-dev eslint-webpack-plugin
+
+     touch .eslintrc then add:
+        {
+         "rules":{}
+        }
+        
+   Next, you can use the new Webpack plugin for ESLint in your Webpack 
+   webpack.config.js file:
+
+   npm install --save-dev @babel/eslint-parser 
+   then in .eslintrc add:
+       touch .eslintrc then add:
+        {
+         "parser": "@babel/eslint-parser",
+         "rules":{}
+        }
+
+  =======================================================
+   - go to https://www.robinwieruch.de/minimal-react-webpack-babel-setup/#react-with-babel
+
+   1.  npm install --save-dev @babel/preset-react 
+     modify .babelrc - insert "@babel/preset-react"
+
+   2. Next, let's inform Webpack in our webpack.config.js file about files with the
+     JSX extension to make sure that they run through the transpiling step as well:
+
+     Insert the following in webpack.config.js:
+        Rules Section: 
+          test: /\.(js|jsx)$/,
+        Resolve Section: 
+            extensions: ['*', '.js', '.jsx'],
+
+      That's it for enabling React in JavaScript by using Babel and Webpack. We are 
+      allowed to write React with JSX now.
+
+    3. In order to use React, you need two libraries (node packages): react and react-dom. 
+       Install them on the command line from your project's root folder:
+
+           npm install --save react react-dom
+
+    4. In your src/index.js, you can implement your entry point into the React world:
+            import React from 'react';
+            import ReactDOM from 'react-dom';
+
+            const title = 'React with Webpack and Babel';
+
+            ReactDOM.render(
+            <div>{title}</div>,
+            document.getElementById('app')
+            );
+
+    5. Add to dist/index.html file:
+         <div id="app"></div>
+
+       do npm start 
+       You should be able to see the output of your React implementation in your browser.
+
+    6. Scroll down to Hot Module Replacement in React
+
+        npm install --save-dev react-hot-loader
+
+        Second, add the configuration to your webpack.config.js file:
+           const webpack = require('webpack');
+           Plugin Section:
+               plugins: [new webpack.HotModuleReplacementPlugin()]
+           Dev Server Section:
+             hot: true
+        Third:
+            Additionally in the src/index.js file, you have to define
+          that hot reloading is available and should be used:   
+              module.hot.accept();
+
+          Start the app Once you change your title for the React component in the src/index.js file, 
+        you should see the updated output in the browser without any browser reloading. 
+       
+           Last but not least, create your first React component. In your src/index.js file, 
+        import a not yet defined App component
+
+        Next create App.js in ./src using touch App.js and then add the following:
+
+            import React from 'react';
+
+            const App = ({ title }) =>
+            <div>{title}</div>;
+
+            export default App;
+
+          Congratulations, you have created your first function component and passed props
+           (e.g ({title}))  to it. 
+
+        That's it for a minimal React setup with Babel and Webpack. Let me know your thoughts 
+        and whether there are things to improve the setup. You can find the repository on GitHub.
+
+
+   
+    7- React Testing with JEST + React Testing Library (RTL)
+
+       - Now let us proceed test a React App using JEST +RTL:
+           https://www.robinwieruch.de/react-testing-jest/ "How to Test React with Jest"
+
+       - Scroll down to "JEST Testing in React Setup" 
+           
+       - copy and add the following code block to src/app.js (including import statements)
+              "Export const dataReducer ..... to export default App
+
+              - the code block uses Axios to fetch data so install axios
+                   npm install axios 
+
+       - In order to get our tests up and running, set up Jest by installing it on the 
+         command line as development dependencies:
+              npm install --save-dev jest
+         then add to package.json script section: 
+              "test": "jest --config ./jest.config.json"
+         then define jest.config.json in Project Root
+              touch jest.config.json
+         add the following pattern to jest.config.json
+              {
+               "testRegex": "((\\.|/*.)(spec))\\.js?$"
+               }
+         create a test file called: App.spec.js
+             touch src/App.spec.js
+
+         implement your test suite in App.spec.js
+ 
+       - now run your test 
+           npm start 
+           npm run test -- --watch
+
+    8. Scroll down to "Jest Snapshot Testing in React"
+         - Jest introduced the so-called Snapshot Test. Basically a Snapshot Test creates a 
+        snapshot -- which is stored in a separate file -- of your rendered component's 
+        output when you run your test. This snapshot is used for diffing it to the next 
+        snapshot when you run your test again.
+ 
+        - By using Jest for Snapshot Tests, you can keep your tests lightweight, without 
+        worrying too much about implementation details of the component
+
+        - First, install the react-test-renderer utility library commonly used for Jest to
+        render your actual component in your tests:
+            npm install --save-dev react-test-renderer
+
+        - Second implement your first Snapshot Test with Jest (see notes in App.spec.js)
+
+    9. Scroll down to "Jest Unit/Integration Testing in React:"
+        
+        - In React 19, react-test-renderer logs a deprecation warning, and has switched 
+        to concurrent rendering. We recommend migrating your tests to @testing-library/react 
+        or @testing-library/react-native for a modern and well supported testing experience.
+
+REVIEW FOLDER11 - React Function Components (TODO - Very good)
+   - https://www.robinwieruch.de/react-function-component/

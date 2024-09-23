@@ -1,0 +1,243 @@
+
+================================================
+ This code already has already webpack, babel,
+ EslLint installed. We need to configure it to
+ to use RTL for testing. See Section2 on
+ how to do it.
+   Complete this demo after completing 
+  reviewFolder13-configure-boilerplate-created-react-to-use-RTL-ongoing
+ ===============================================
+
+1. Tutorial: https://www.robinwieruch.de/vitest-react-testing-library/
+             Scroll down to "Vitest vs React Testing Library" then click
+               "Vitest With Reac Testing Library" link
+                https://www.robinwieruch.de/vitest-react-testing-library/
+                for brief walkthrough on how to setup React Testing Library
+
+             After you are done with the walkthrough to setup React Testing Library
+             go back to https://www.robinwieruch.de/react-testing-library/
+             
+             Scroll down to: "React Testing Library: Rendering a Component"
+
+
+   Walkthrough to setup React Testing Library (https://www.robinwieruch.de/vitest-react-testing-library/ )
+
+2. Install Vitest: 
+      npm install vitest --save-dev
+
+3. Add the following script tp package.json
+     "scripts": {
+    "test": "vitest",
+  },
+
+4. create App.test.jsx and add the following code:
+     import { describe, it, expect } from 'vitest';
+
+    describe('something truthy and falsy', () => {
+    it('true to be true', () => {
+        expect(true).toBe(true);
+    });
+
+    it('false to be false', () => {
+        expect(false).toBe(false);
+    });
+    });
+ 
+5. run the test they should turn out green: 
+    npm run dev 
+    npm run test 
+
+6. Still in Walkthrough to setup React Testing Library scroll down to 
+   "Vitest with React Testing Library"
+
+    - first since React Testing Library tests React components, we need to enable 
+      HTML in Vitest with a library like jsdom. First, install the library on 
+      the command line:
+
+        npm install jsdom --save-dev
+
+    - Second, include it to the Vite configuration file vite.config.js
+         test: {
+                environment: 'jsdom',
+            },
+
+    - Third install React Testing Library on the command line:
+        npm install @testing-library/react @testing-library/jest-dom --save-dev
+
+    - Fourth Fourth, add a test setup file in tests/setup.js and give it the following implementation:
+         md src/tests
+         touch setup.js
+
+    - And last, include this new test setup file in Vite's configuration file. 
+      In addition, make all imports from Vitest global, so that you don't need to 
+      perform these imports (e.g. expect) in each file manually anymore:
+         test: {
+            globals: true,
+            environment: 'jsdom',
+            setupFiles: './tests/setup.js',
+        },
+
+     - That's it. You can render React components in Vitest now. 
+       Add the following code to App.test.jsk
+
+        describe('App', () => {
+            it('renders headline', () => {
+                render(<App title="React" />);
+
+                screen.debug();
+
+                // check if App components renders headline
+            });
+            });
+   
+          npm run dev 
+          npm run test 
+
+  ================================================
+       Section2: Manually Setup Webpack and Babel 
+  ================================================
+  7. After testing above scroll down a little bit more and click 
+     "Continue Reading: Testing React Components with React Testing Library"
+     This will take you back to "https://www.robinwieruch.de/react-testing-library/"
+  
+  8. Read this link again and go to "Custom React Setup" to setup JEST 
+     and React Testing Library" yourself.  
+        - you can download a React Boilerplate project from 
+          github https://github.com/rwieruch/minimal-react-webpack-babel-setup.
+          This boiler project has already webpack and babel setup. But dont use it.
+          Create your own React project using create-react-app and set it up yourself.
+       
+     STEP1:
+        npx create-react-app manually-setup-react-app
+          
+        Bring up code in VS Studio Code and understand the project files:
+        A good reference in pluralsight in React is:
+           https://app.pluralsight.com/ilx/video-courses/clips/a028fa58-7f10-4613-9d46-0b4885bba5a7          
+    
+ 
+     STEP2: Install important extensions"
+          npm install -g prettier
+          go to VSCode and install "Prettier Code Formatter" and "Prettier Eslint" extensions
+
+                   A. React with Babel - https://www.robinwieruch.de/minimal-react-webpack-babel-setup/#react-with-babel
+                  B. React with Webpack - https://www.robinwieruch.de/minimal-react-webpack-babel-setup/#react-with-webpack
+                  C. Hot Module Replacement in React - https://www.robinwieruch.de/minimal-react-webpack-babel-setup/#hot-module-replacement-in-react
+
+                 (A). Details of React with Babel tutorial:
+                      npm install --save-dev @babel/preset-react
+
+                      In your .babelrc (or package.json) file -- depending on where you have your 
+                      Babel configuration for presets and plugins -- add the new preset. 
+                      In this tutorial, we will add it in our .babelrc file. 
+                      Add the "preset" code to .babelrc
+                          {
+                            "presets": [
+                              "@babel/preset-env",
+                              "@babel/preset-react"
+                            ]
+                          }
+
+                      Next let's inform Webpack in our webpack.config.js file about files 
+                      with the JSX extension to make sure that they run through the 
+                      transpiling step as well. see notes in webpack.config.js
+                          - insert in rules section:
+                               test: /\.(js|jsx)$/,
+                          - insert in resolve section:
+                               extensions: ['*', '.js', '.jsx'],
+
+
+                      That's it for enabling React in JavaScript by using Babel and Webpack. 
+                      We are allowed to write React with JSX now
+
+                  (B). Details of React with Webpack tutorial: 
+                      So far you should have the following folder structure:
+                            - node_modules/
+                            - dist/
+                              -- index.html
+                            - src/
+                              -- index.js
+                            - package.json
+                            - webpack.config.js   
+
+                      Next In order to use React, you need two libraries (node packages):
+                      react and react-dom. Install it from root folder 
+                      C:\_AMyReactDev\reviewFolder9-how-to-test-react-components:
+                
+                         npm install --save react react-dom
+
+                      Next go to src/index.js and implement your entry point which is  
+                      document.getElementById('app'):   
+
+                          ReactDOM.render(
+                            <div>{title}</div>,
+                            document.getElementById('app')
+                          );
+
+                      Next the React DOM API takes two arguments. The first argument is 
+                      the rendered JSX from React, the second argument is the HTML <div id="app">
+                      element where it should be integrated into the DOM. 
+                          Since it expects an HTML element 
+                      identified by an id attribute, we need to add this element in our 
+                      dist/index.html file:
+                          go dist/index.html and add <div id="app"></div>
+
+                      do Start your application with npm start to see the output.
+
+                  (C). Details of React with Hot Module Replacement tutorial: 
+                      A huge development boost will give you react-hot-loader (Hot Module Replacement). 
+                      It will shorten your feedback loop during development. Basically whenever you 
+                      change something in your source code, the change will apply in your app running 
+                      in the browser without reloading the entire page.
+                      
+                          First do: npm install --save-dev react-hot-loader 
+
+                          Install it from root folder C:\_AMyReactDev\reviewFolder9-how-to-test-react-components
+
+                      Second: Add the configuration to your webpack.config.js file:
+                            Insert in Plugins section:
+                               plugins: [new webpack.HotModuleReplacementPlugin()],
+                            Insert in devServer Section:
+                               hot:true
+
+                      Third: modify src/index.js. You have to define that hot reloading is available.
+                      Insert code:
+                          module.hot.accept();
+
+                      If you would remove the module.hot.accept(); line in index.js, the browser would 
+                      perform a reload if something has changed in the source code. 
+
+              (2) Last but not least, create your first component App.js. Then in your src/index.js 
+                  import app.js. To create App.js do:
+
+                      cd src/
+                      touch App.js   
+                      then bring up App.js in VS Code and add the following code: 
+
+                        import React from 'react';
+
+                          const App = ({ title }) =>
+                            <div>{title}</div>;
+
+                          export default App;
+
+
+              (3) Exercises (To Do)
+                  - go to Advance Webpack Setup 
+                        https://www.robinwieruch.de/webpack-advanced-setup-tutorial/
+
+                  - Put it into your minimal React with Webpack application
+
+                  - Confirm your final result with the official advanced React with Webpack setup
+                        https://github.com/rwieruch/advanced-react-webpack-babel-setup
+
+                    This tutorial is part 1 of 3 in the series.
+
+                    Part 2: How to use ESLint in Webpack - https://www.robinwieruch.de/webpack-eslint/
+                    Part 3: How to use ESLint in React - https://www.robinwieruch.de/react-eslint-webpack-babel/
+                    Continue Reading: How to use Prettier in VS Code -https://www.robinwieruch.de/how-to-use-prettier-vscode/
+                    Continue Reading: How to use CSS Modules in React - https://www.robinwieruch.de/react-css-modules/
+                    Continue Reading: How to use SVG Icons as React Components? - https://www.robinwieruch.de/react-svg-icon-components/
+                    Continue Reading: How to use Fonts in React - https://www.robinwieruch.de/webpack-font/
+                    Continue Reading: How to use Images in React - https://www.robinwieruch.de/webpack-images/
+
+     STEP5: Hot Module Replacement

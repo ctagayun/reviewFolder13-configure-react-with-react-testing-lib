@@ -1,4 +1,3 @@
-const webpack = require('webpack');
 const path = require("path");
 const ESLintPlugin = require('eslint-webpack-plugin');
 module.exports = {
@@ -7,31 +6,27 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.(js)$/,
         exclude: /node_modules/,
         use: ["babel-loader"],
       },
     ],
   },
   resolve: {
-    extensions: ['*', '.js', '.jsx'],
+    extensions: ["*", ".js"],
   },
   // 2
   output: {
     path: path.resolve(__dirname, "./dist"),
     filename: "bundle.js",
   },
-
-  //4
-  plugins:  
-     //  [new ESLintPlugin()]:
-       [new webpack.HotModuleReplacementPlugin()],
-     
   // 3
   devServer: {
     static: path.resolve(__dirname, "./dist"),
-    hot: true,
-  }, 
+  },
+  //4
+  plugins: [new ESLintPlugin()],
+  
 };
 
 /* 
@@ -46,7 +41,5 @@ module.exports = {
            touch .eslintrc
 
            npm install --save-dev @babel/eslint-parser
-
-        
               
   */  
